@@ -9,8 +9,9 @@
         method="post"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
+        data-netlify-recaptcha="true"
       >
-        <input type="hidden" name="form-name" value="vue-tea">
+        <div data-netlify-recaptcha="true" />
         <div class="tea">
           <h2>Pick a Tea</h2>
           <label
@@ -39,7 +40,15 @@
 
 <script>
 export default {
-  data() {
+  computed: {
+    teaName() {
+      return `${this.teaTypes[this.chosenTea]} Fog`
+    },
+    teaNames() {
+      return Object.keys(this.teaTypes)
+    }
+  },
+  asyncData() {
     return {
       chosenTea: 'Earl Grey',
       teaTypes: {
@@ -52,14 +61,6 @@ export default {
         'Yerba Mate': 'Montreal',
         Green: 'Oregon Mist'
       }
-    }
-  },
-  computed: {
-    teaName() {
-      return `${this.teaTypes[this.chosenTea]} Fog`
-    },
-    teaNames() {
-      return Object.keys(this.teaTypes)
     }
   }
 }
